@@ -1,4 +1,6 @@
-# Stuff for Git to ignore
+# The stuff I want to keep out of my Git repos
+
+# General
 *.pdf
 
 # Matlab
