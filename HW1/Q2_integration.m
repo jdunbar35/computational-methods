@@ -1,8 +1,9 @@
 % Description...
 % Jack Dunbar
-% Due: October 31, 2024
+% Due: October 30, 2024
 
 clear variables; close all; clc
+rng(123123);
 
 % Setup
     % Parameters
