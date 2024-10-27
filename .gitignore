@@ -2,6 +2,7 @@
 
 # General
 *.pdf
+*.swp
 
 # Matlab
 *.asv
