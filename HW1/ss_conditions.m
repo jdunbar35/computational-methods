@@ -17,8 +17,8 @@ function ss_conds = ss_conditions(v, parameters)
     alpha = parameters(3);
     delta = parameters(4);
     %psi = parameters(5);
-    tau = parameters(6);
-    z = parameters(7);
+    z = parameters(6);
+    tau = parameters(7);
 
     % Define some helper variables
     U_c = 1 / c;
