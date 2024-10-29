@@ -71,16 +71,18 @@
     
     v_steep = v_new;
 
-% Conjugate descent
-    max_iter = 1000;
+%% Conjugate descent
+    max_iter = 10;
     iter = 0;
-    v0 = [0; 0];
+    v0 = [1; 1];
     v_curr = v0;
     
-    alpha = 0.01;
+
     
     while iter < max_iter
         iter = iter + 1;
+
+        iter, v_curr
         
         grad_curr = grad_f(v_curr);
         
@@ -88,14 +90,14 @@
     
         if iter == 1
             d = -grad_curr;
-            g = @(alpha) f(v_curr + alpha*d);
-            alpha = fminunc(g, alpha);
+            alpha = 0.1;
             v_new = v_curr + alpha * d;
         else
             beta = (grad_curr'*grad_curr) / (grad_prev'*grad_prev);
             vd = -grad_curr + beta*d;
             g = @(alpha) f(v_curr + alpha*d);
-            alpha = fminunc(g, alpha);
+            options = optimoptions('fminunc', 'Display', 'off');
+            alpha = fminunc(g, 1, options);
             v_new = v_curr + alpha * vd;
         end
     

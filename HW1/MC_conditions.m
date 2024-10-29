@@ -1,20 +1,25 @@
+%% Q5: Computes excess demand at a set of prices
+% Jack Dunbar
+% Due: October 31, 2024
+
 function conds = MC_conditions(vP, vAlpha, mOmega, mE)
     n = size(mOmega, 2);
 
     vP = [1; vP];
 
-    % figure out demand as a function of prices and m
+    % Demand as a function of the Lagrange multiplier mu
+    mX_demand = @(vMu) ((vP * vMu') ./ vAlpha) .^ (1 ./ mOmega);
+
+    % Find the Mu that statisfies the market clearing constraint
     vMu0 = ones(n, 1);
+    BC_conds = @(vMu) vP' * (mE - mX_demand(vMu));
+    options = optimoptions('fsolve', 'Display', 'off');
+    vMu_opt = fsolve(BC_conds, vMu0, options);
 
-    mX_func = @(vMu) ((vP * vMu') ./ vAlpha) .^ (1 ./ mOmega);
-    %mX_func(vMu0)
-    BC_conds = @(vMu) vP' * (mE - mX_func(vMu));
-    
-    vMu_opt = fsolve(BC_conds, vMu0);
-    %vMu_opt
+    % Compute the allocation at that mu
     mX_opt = mX_func(vMu_opt);
-    mX_opt
 
+    % Return excess demand
     conds = sum(mE - mX_opt, 2);
 end
 

@@ -13,12 +13,12 @@ rng(123123);
     % Grid
     lb = 0;
     ub = 100;
-    n_bins = 10000;
+    n_bins = 10000000;
     vT = linspace(lb, ub, n_bins+1);
     bin_width = (ub - lb) / n_bins;
     
     % Function
-    f = @(t) -exp(exp(lambda*t) - 1 - rho*t);
+    f = @(t) -exp(exp(-lambda*t) - 1 - rho*t);
 
 % Midpoint quadrature
     int_mid = 0;
