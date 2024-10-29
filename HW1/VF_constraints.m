@@ -1,4 +1,4 @@
-function [ineq, eq] = VF_constraints(v, parameters, end_states, given)
+function [ineq, eq] = VF_constraints(v, parameters, states, given)
     ineq = [];
 
     c = v(1);
@@ -9,8 +9,9 @@ function [ineq, eq] = VF_constraints(v, parameters, end_states, given)
     delta = parameters(4);
     psi = parameters(5);
 
-    k = end_states(1);
-    im = end_states(2);
+    tau = states(2);
+    k = states(3);
+    im = states(4);
 
     w = given(1);
     r = given(2);

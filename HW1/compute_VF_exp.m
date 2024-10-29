@@ -9,7 +9,7 @@ function mVF_exp = compute_VF_exp(mVF_curr, mTrans)
             for iTau = 1:nTau
                 for iZ = 1:nZ
                     mTrans_state = mTrans(iZ, iTau, :, :);
-                    mVF_exp(iZ, iTau, iK, iIm) = sum(VF_states .* mTrans_state, 'all');
+                    mVF_exp(iZ, iTau, iK, iIm) = sum(VF_states .* mTrans_state, 'all') / (nZ * nTau);
                 end
             end
         end

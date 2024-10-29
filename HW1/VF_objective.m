@@ -4,6 +4,8 @@ function obj_val = VF_objective(v, mVF_exp, vK, vIm, parameters, given)
     kp = v(3);
     i = v(4);
 
+    %v
+
     beta = parameters(1);
     gamma = parameters(2);
 
