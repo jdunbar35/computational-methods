@@ -1,11 +1,16 @@
 # The stuff I want to keep out of my Git repos
 
-# Git ignore folders
-ignore/
-
 # General
 *.pdf
+
+# Git ignore folder
+ignore/
+
+# Files created by Vim
 *.swp
+
+# Latex tables from tables generator
+*.tgn
 
 # Matlab
 *.asv
