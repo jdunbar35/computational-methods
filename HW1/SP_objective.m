@@ -1,6 +1,6 @@
 %% Q4: Computes social planner's objective function
 % Jack Dunbar
-% Due: October 31, 2024
+% October 31, 2024
 
 function obj_val = SP_objective(vX, vAlpha, mOmega, vLambda)
     [m , n] = size(mOmega);

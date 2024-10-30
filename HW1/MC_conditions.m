@@ -1,6 +1,6 @@
 %% Q5: Computes excess demand at a set of prices
 % Jack Dunbar
-% Due: October 31, 2024
+% October 31, 2024
 
 function conds = MC_conditions(vP, vAlpha, mOmega, mE)
     n = size(mOmega, 2);
@@ -17,7 +17,7 @@ function conds = MC_conditions(vP, vAlpha, mOmega, mE)
     vMu_opt = fsolve(BC_conds, vMu0, options);
 
     % Compute the allocation at that mu
-    mX_opt = mX_func(vMu_opt);
+    mX_opt = mX_demand(vMu_opt);
 
     % Return excess demand
     conds = sum(mE - mX_opt, 2);

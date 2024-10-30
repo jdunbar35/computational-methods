@@ -1,6 +1,6 @@
 %% Q4: Solves for Pareto optimal allocations in an endowment economy
 % Jack Dunbar
-% Due: October 31, 2024
+% October 31, 2024
 
 function mX_opt = PO_allocation(mE, vAlpha, mOmega, vLambda)
     [m, n] = size(mE);

@@ -105,7 +105,7 @@ while (max_diff_w_r > tol_w_r)
     while (max_diff_VF > tol_VF)
         iter_VF = iter_VF + 1;
 
-        mVF_exp = compute_VF_exp(mVF_curr, mTrans);
+        mVF_exp = compute_VF_exp(mVF_curr, mTrans); % FIX THIS
         
         for iZ = 1:nZ
             z = vZ(iZ);
@@ -140,6 +140,7 @@ while (max_diff_w_r > tol_w_r)
                         options = optimoptions('fmincon', 'Display', 'off');
                         
                         % [c, l, k', i]
+                        % DO THIS WAY BETTER
                         v_opt = fmincon(obj, v0, [], [], [], [], lb, ub, cons, options);
         
                         c = v_opt(1);
@@ -185,7 +186,7 @@ while (max_diff_w_r > tol_w_r)
         mVF_curr = mVF_new;
     end
 
-    % Update...
+    % Update... DONT DO THIS SO HARSHLY
     mW_new = mW_tmp;
     mR_new = mR_tmp;
 

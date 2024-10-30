@@ -1,6 +1,6 @@
-% Description...
+%% Q2: Comparison of integration techniques on a lifetime utility function
 % Jack Dunbar
-% Due: October 30, 2024
+% October 31, 2024
 
 clear variables; close all; clc
 rng(123123);
