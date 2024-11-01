@@ -163,7 +163,7 @@ while (max_diff_w_r > tol_w_r)
                         options = optimoptions('fmincon', 'Display', 'off');
                         
                         % [c, l, k', i]
-                        % This could be much faster
+                        % EFFICIENCY: The code spends most of its time in here
                         v_opt = fmincon(obj, v0, [], [], [], [], lb, ub, cons, options);
         
                         c = v_opt(1);
@@ -231,5 +231,110 @@ end
 toc;
 
 
-%% Plot Value and Policy Functions
+%% 6.3: Plot Value Function, Capital Policy, and Wages
 
+close all
+lw = 1.5;
+
+% Value function
+fig = figure;
+tiledlayout(2, 2, 'TileSpacing', 'compact', 'Padding', 'compact')
+
+nexttile;
+    plot(vK, squeeze(mVF_new(1, 2, :, 3)), 'LineWidth', lw); hold on;
+    plot(vK, squeeze(mVF_new(2, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mVF_new(3, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mVF_new(4, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mVF_new(5, 2, :, 3)), 'LineWidth', lw); 
+    title("Value Function v (i^{-} and \tau fixed)"); xlabel("k");
+    legend({sprintf('z = %.2f', vZ(1)), sprintf('z = %.2f', vZ(2)), ...
+        sprintf('z = %.2f', vZ(3)), sprintf('z = %.2f', vZ(4)), ...
+        sprintf('z = %.2f', vZ(5))}, 'Location', 'southeast');
+
+nexttile;
+    plot(vIm, squeeze(mVF_new(1, 2, 3, :)), 'LineWidth', lw); hold on;
+    plot(vIm, squeeze(mVF_new(2, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mVF_new(3, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mVF_new(4, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mVF_new(5, 2, 3, :)), 'LineWidth', lw); 
+    title("Value Function v (k and \tau fixed)"); xlabel("i^{-}");
+    legend({sprintf('z = %.2f', vZ(1)), sprintf('z = %.2f', vZ(2)), ...
+        sprintf('z = %.2f', vZ(3)), sprintf('z = %.2f', vZ(4)), ...
+        sprintf('z = %.2f', vZ(5))}, 'Location', 'southeast');
+
+nexttile;
+    plot(vK, squeeze(mVF_new(3, 1, :, 3)), 'LineWidth', lw); hold on;
+    plot(vK, squeeze(mVF_new(3, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mVF_new(3, 3, :, 3)), 'LineWidth', lw); 
+    title("Value Function v (i^{-} and z fixed)"); xlabel("k");
+    legend({sprintf('\\tau = %.2f', vTau(1)), sprintf('\\tau = %.2f', vTau(2)), ...
+        sprintf('\\tau = %.2f', vTau(3))}, 'Location', 'southeast');
+
+nexttile;
+    plot(vIm, squeeze(mVF_new(3, 1, 3, :)), 'LineWidth', lw); hold on;
+    plot(vIm, squeeze(mVF_new(3, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mVF_new(3, 3, 3, :)), 'LineWidth', lw);
+    title("Value Function v (k and z fixed)"); xlabel("i^{-}");
+    legend({sprintf('\\tau = %.2f', vTau(1)), sprintf('\\tau = %.2f', vTau(2)), ...
+        sprintf('\\tau = %.2f', vTau(3))}, 'Location', 'southeast');
+
+fig.Position = [100, 100, 900, 500];
+saveas(fig, "figures/value.png")
+
+% Capital policy
+fig = figure;
+tiledlayout(1, 2, 'TileSpacing', 'compact', 'Padding', 'compact')
+
+nexttile;
+    plot(vK, squeeze(mPol_kp(1, 2, :, 3)), 'LineWidth', lw); hold on;
+    plot(vK, squeeze(mPol_kp(2, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mPol_kp(3, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mPol_kp(4, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mPol_kp(5, 2, :, 3)), 'LineWidth', lw); 
+    title("k^{\prime} policy function (i^{-} and \tau fixed)"); xlabel("k");
+    legend({sprintf('z = %.2f', vZ(1)), sprintf('z = %.2f', vZ(2)), ...
+        sprintf('z = %.2f', vZ(3)), sprintf('z = %.2f', vZ(4)), ...
+        sprintf('z = %.2f', vZ(5))}, 'Location', 'southeast');
+
+nexttile;
+    plot(vIm, squeeze(mPol_kp(1, 2, 3, :)), 'LineWidth', lw); hold on;
+    plot(vIm, squeeze(mPol_kp(2, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mPol_kp(3, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mPol_kp(4, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mPol_kp(5, 2, 3, :)), 'LineWidth', lw); 
+    title("k^{\prime} policy function (k and \tau fixed)"); xlabel("i^{-}");
+    legend({sprintf('z = %.2f', vZ(1)), sprintf('z = %.2f', vZ(2)), ...
+        sprintf('z = %.2f', vZ(3)), sprintf('z = %.2f', vZ(4)), ...
+        sprintf('z = %.2f', vZ(5))}, 'Location', 'southeast');
+
+fig.Position = [100, 100, 900, 300];
+saveas(fig, "figures/policy_kp.png")
+
+% Wages
+fig = figure;
+tiledlayout(1, 2, 'TileSpacing', 'compact', 'Padding', 'compact')
+
+nexttile;
+    plot(vK, squeeze(mW_new(1, 2, :, 3)), 'LineWidth', lw); hold on;
+    plot(vK, squeeze(mW_new(2, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mW_new(3, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mW_new(4, 2, :, 3)), 'LineWidth', lw); 
+    plot(vK, squeeze(mW_new(5, 2, :, 3)), 'LineWidth', lw); 
+    title("Wages w (i^{-} and \tau fixed)"); xlabel("k");
+    legend({sprintf('z = %.2f', vZ(1)), sprintf('z = %.2f', vZ(2)), ...
+        sprintf('z = %.2f', vZ(3)), sprintf('z = %.2f', vZ(4)), ...
+        sprintf('z = %.2f', vZ(5))}, 'Location', 'southeast');
+
+nexttile;
+    plot(vIm, squeeze(mW_new(1, 2, 3, :)), 'LineWidth', lw); hold on;
+    plot(vIm, squeeze(mW_new(2, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mW_new(3, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mW_new(4, 2, 3, :)), 'LineWidth', lw); 
+    plot(vIm, squeeze(mW_new(5, 2, 3, :)), 'LineWidth', lw); 
+    title("Wages w (k and \tau fixed)"); xlabel("i^{-}");
+    legend({sprintf('z = %.2f', vZ(1)), sprintf('z = %.2f', vZ(2)), ...
+        sprintf('z = %.2f', vZ(3)), sprintf('z = %.2f', vZ(4)), ...
+        sprintf('z = %.2f', vZ(5))}, 'Location', 'southeast');
+
+fig.Position = [100, 100, 900, 300];
+saveas(fig, "figures/wages.png")

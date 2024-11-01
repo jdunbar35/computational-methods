@@ -1,4 +1,4 @@
-%% Q6: Constraints for the household value function
+%% Q6: Constraints for the household problem
 % Jack Dunbar
 % October 31, 2024
 

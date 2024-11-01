@@ -1,4 +1,4 @@
-%% Q6: Returns social planner decentralized steady state conditions
+%% Q6: Returns social planner steady state conditions
 % Jack Dunbar
 % Due: October 31, 2024
 

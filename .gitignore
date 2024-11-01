@@ -3,6 +3,9 @@
 # General
 *.pdf
 
+# Images
+*.png
+
 # Git ignore folder
 ignore/
 
