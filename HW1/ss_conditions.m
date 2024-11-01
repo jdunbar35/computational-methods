@@ -1,6 +1,6 @@
-% Purpose...
+%% Q6: Returns decentralized steady state conditions
 % Jack Dunbar
-% Due: October 5, 2024
+% October 31, 2024
 
 % Function: Create steady state optimality conditions for solving
 function ss_conds = ss_conditions(v, parameters) 

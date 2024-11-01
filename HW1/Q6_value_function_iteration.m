@@ -1,4 +1,5 @@
 %% Q6: Value Function Iteration for Neoclassicial Growth Model with Distortionary Taxation
+    % 6.3 takes ~40 seconds to run on a 5x5 capital-lagged investment grid with 0.1 tolerances
 % Jack Dunbar
 % October 31, 2024
 
@@ -87,15 +88,15 @@ mTau_trans = mOnes .* reshape(mTau_trans, 1, nTau, 1, nTau);
 mZ_trans = mOnes .* reshape(mZ_trans, nZ, 1, nZ, 1);
 mTrans = mTau_trans .* mZ_trans;
 
-% Capital grid
+% Capital (k) grid
 nK = 5;
 vK = linspace(k_ss * 0.7, k_ss * 1.3, nK)';
 
 % Investment yesterday (i-) grid
-nIm = 3;
+nIm = 5;
 vIm = linspace(i_ss * 0.5, i_ss * 1.5, nIm)';
 
-% Take filthy initial guesses...
+% Take initial guesses based on deterministic steady states
 v0 = v_ss;
 [mPol_c, mPol_l, mPol_kp, mPol_i, mW_curr, mR_curr, mVF_curr] = initial_guesses(v0, vZ, vTau, vK, vIm, parameters);
 
@@ -108,12 +109,12 @@ mVF_new = zeros(nZ, nTau, nK, nIm);
 
 % Wage, interest rate iteration
 max_diff_w_r = 10;
-tol_w_r = 10e-2;
+tol_w_r = 1e-1;
 
 % Value function iteration
-tol_VF = 10e-2;
+tol_VF = 1e-1;
 
-% Loop
+% Loop over wages and interest rates
 tic;
 iter_w_r = 0;
 while (max_diff_w_r > tol_w_r)
@@ -125,14 +126,17 @@ while (max_diff_w_r > tol_w_r)
     while (max_diff_VF > tol_VF)
         iter_VF = iter_VF + 1;
 
-        mVF_exp = compute_VF_exp(mVF_curr, mTrans); % FIX THIS
+        % Compute the expectation of the value function
+        mVF_exp = compute_VF_exp(mVF_curr, mTrans);
         
+        % Loop over states and update the value function at each
+        % EFFICIENCY: Some vectorization could make this much faster
         for iZ = 1:nZ
             z = vZ(iZ);
             for iTau = 1:nTau
                 tau = vTau(iTau);
                 for iK = 1:nK
-                     k = vK(iK);
+                    k = vK(iK);
                     for iIm = 1:nIm
                         im = vIm(iIm);
         
@@ -152,34 +156,33 @@ while (max_diff_w_r > tol_w_r)
         
                         obj = @(v) -VF_objective(v, mVF_exp_curr, vK, vIm, parameters, given);
                         cons = @(v) VF_constraints(v, parameters, states, given);
-        
-                        % Add lb and ub
+
                         lb = [0, 0, vK(1), vIm(1)];
                         ub = [1000, 1000, vK(nK), vIm(nIm)];
         
                         options = optimoptions('fmincon', 'Display', 'off');
                         
                         % [c, l, k', i]
-                        % DO THIS WAY BETTER
+                        % This could be much faster
                         v_opt = fmincon(obj, v0, [], [], [], [], lb, ub, cons, options);
         
                         c = v_opt(1);
                         l = v_opt(2);
                         kp = v_opt(3);
                         i = v_opt(4);
-                        
-                        % Parameters
+
                         beta = parameters(1);
                         gamma = parameters(2);
                         alpha = parameters(3);
         
-                        % Calculate new wages...
+                        % Calculate new wages
                         w = (1-alpha) * exp(z) * (k / l)^(alpha);
                         r = alpha * exp(z) * (k / l)^(alpha-1);
         
                         g = (1 - tau) * w * l;
         
                         flow_value = utility(c, g, l, gamma);
+                        % EFFICIENCY: Shouldn't be interpolating every time like this
                         cont_value = beta * mVF_exp_interp(mVF_exp_curr, kp, i, vK, vIm);
         
                         mVF_new(iZ, iTau, iK, iIm) = flow_value + cont_value;
@@ -196,6 +199,7 @@ while (max_diff_w_r > tol_w_r)
             end
         end
         
+        % Check for convergence
         diff_VF = mVF_new - mVF_curr;
         max_diff_VF = max(abs(diff_VF(:)));
         
@@ -206,10 +210,12 @@ while (max_diff_w_r > tol_w_r)
         mVF_curr = mVF_new;
     end
 
-    % Update... DONT DO THIS SO HARSHLY
+    % Update wage and interest rates
+    % EFFICIENCY: Harsh updating may not be ideal
     mW_new = mW_tmp;
     mR_new = mR_tmp;
 
+    % Check for convergence
     diff_w = mW_new - mW_curr;
     diff_r = mR_new - mR_curr;
     
@@ -223,3 +229,7 @@ while (max_diff_w_r > tol_w_r)
     mR_curr = mR_new;
 end
 toc;
+
+
+%% Plot Value and Policy Functions
+

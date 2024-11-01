@@ -1,3 +1,7 @@
+%% Computes initial guesses for value function iteration based on deterministic steady states
+% Jack Dunbar
+% October 31, 2024
+
 function [mC, mL, mK, mI, mW, mR, mVF] = initial_guesses(v0, vZ, vTau, vK, vIm, parameters)
     % Dimensions
     nZ = length(vZ);
@@ -18,6 +22,7 @@ function [mC, mL, mK, mI, mW, mR, mVF] = initial_guesses(v0, vZ, vTau, vK, vIm, 
 
     mVF_ss = zeros(nZ, nTau);
     
+    % Loop over the deterministic steady states
     for iZ = 1:nZ
         z = vZ(iZ);
         for iTau = 1:nTau
@@ -42,7 +47,7 @@ function [mC, mL, mK, mI, mW, mR, mVF] = initial_guesses(v0, vZ, vTau, vK, vIm, 
         end
     end
     
-    % Meshgrid
+    % Meshgrids
     mOnes = ones(nZ, nTau, nK, nIm);
     mC = mOnes .* reshape(mC_ss, nZ, nTau, 1, 1);
     mL = mOnes .* reshape(mL_ss, nZ, nTau, 1, 1);
@@ -50,13 +55,13 @@ function [mC, mL, mK, mI, mW, mR, mVF] = initial_guesses(v0, vZ, vTau, vK, vIm, 
     mI = mOnes .* reshape(mI_ss, nZ, nTau, 1, 1);
     mVF = mOnes .* reshape(mVF_ss, nZ, nTau, 1, 1);
 
-    % Do wages, interest rate
+    % Do wages and interest rates also at each level of capital
 
-    % Meshgrid of relevant variables
+    % Meshgrids
     mZ = mOnes .* reshape(vZ, nZ, 1, 1, 1);
     mK_full = mOnes .* reshape(vK, 1, 1, nK, 1);
 
-    % Firm's FOCs
+    % Marginal productivites
     mW = (1-alpha) * exp(mZ) .* (mK_full ./ mL) .^ (alpha);
     mR = alpha * exp(mZ) .* (mK_full ./ mL) .^ (alpha-1);
 end

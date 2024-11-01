@@ -1,6 +1,6 @@
-% Purpose...
+%% Q6: Returns social planner decentralized steady state conditions
 % Jack Dunbar
-% Due: October 5, 2024
+% Due: October 31, 2024
 
 % Function: Create steady state optimality conditions for solving
 function ss_conds = SP_ss_conditions(v, parameters) 

@@ -1,3 +1,7 @@
+%% Q6: Constraints for the household value function
+% Jack Dunbar
+% October 31, 2024
+
 function [ineq, eq] = VF_constraints(v, parameters, states, given)
     ineq = [];
 
