@@ -31,8 +31,8 @@ vLambda = linspace(1, 2, n)';
 vLambda = vLambda / sum(vLambda); % Normalize to 1
 
 mX_PO_1 = PO_allocation(mE, vAlpha, mOmega, vLambda);
-fprintf("1. m = n = 3, no heterogeneity\n")
-print_matrix(mX_PO_1, 2)
+%fprintf("1. m = n = 3, no heterogeneity\n")
+%print_matrix(mX_PO_1, 2)
 
 %% 2. m = n = 10, heterogeneity
 
@@ -61,5 +61,5 @@ vLambda = linspace(1, 2, n)';
 vLambda = vLambda / sum(vLambda); % Normalize to 1
 
 mX_PO_3 = PO_allocation(mE, vAlpha, mOmega, vLambda);
-fprintf('\nm = n = 10, heterogeneity\n')
-print_matrix(mX_PO_3, 2)
+%fprintf('\nm = n = 10, heterogeneity\n')
+%print_matrix(mX_PO_3, 2)

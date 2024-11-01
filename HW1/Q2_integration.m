@@ -14,5 +14,5 @@ for n_bins = [1000, 100000, 10000000]
     end
 end
 
-fprintf("Lifetime utility function integrals, time to compute\n")
-print_matrix(mIntegral, 4);
+%fprintf("Lifetime utility function integrals, time to compute\n")
+%print_matrix(mIntegral, 4);

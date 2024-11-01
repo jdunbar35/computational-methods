@@ -1,6 +1,10 @@
+%% Q6: Value Function Iteration for Neoclassicial Growth Model with Distortionary Taxation
+% Jack Dunbar
+% October 31, 2024
+
 clear variables; close all; clc
 
-%% 6.1 Social Planner Steady State
+%% 6.1 Social Planner Steady State with z = 0, tau = 0.25
 
 % Set parameters
 % [beta, gamma, alpha, delta, psi, z, tau]
@@ -16,7 +20,16 @@ options = optimoptions('fsolve', 'Display', 'off');
 conds = @(v) SP_ss_conditions(v, parameters_ss);
 v_SP_ss = fsolve(conds, v0, options);
 
-%% 6.2 Decentralized Steady State
+l_SP_ss = v_SP_ss(3);
+k_SP_ss = v_SP_ss(4);
+
+MPL_SP_ss = (1-0.33) * (k_SP_ss/l_SP_ss)^(-0.33);
+MPK_SP_ss = 0.33 * (k_SP_ss/l_SP_ss)^(0.33-1);
+
+%print_matrix(v_SP_ss', 2);
+%print_matrix([MPL_SP_ss; MPK_SP_ss], 2);
+
+%% 6.2 Decentralized Steady State with z = 0, tau = 0.25
 
 % Set parameters
 % [beta, gamma, alpha, delta, psi, z, tau]
@@ -37,6 +50,13 @@ g_ss = v_ss(2);
 l_ss = v_ss(3);
 k_ss = v_ss(4);
 i_ss = v_ss(5);
+
+w_ss = (1-0.33) * (k_ss/l_ss)^(-0.33);
+r_ss = 0.33 * (k_ss/l_ss)^(0.33-1);
+
+%fprintf("\n")
+%print_matrix(v_ss', 2);
+%print_matrix([w_ss; r_ss], 2);
 
 %% 6.3 Value Function Iteration with a Fixed Grid
 

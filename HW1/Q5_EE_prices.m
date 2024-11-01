@@ -34,5 +34,5 @@ options = optimoptions('fsolve', 'Display', 'off', 'Algorithm', 'levenberg-marqu
 vP_opt = fsolve(conds, vP0, options);
 vP_opt = [1, reshape(vP_opt, 1, m-1)]; % Add back the price kept fixed
 
-fprintf("m = n = 10, heterogeneity\n")
-print_matrix(vP_opt, 2)
+%fprintf("m = n = 10, heterogeneity\n")
+%print_matrix(vP_opt, 2)

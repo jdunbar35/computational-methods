@@ -48,7 +48,7 @@ end
 v_NR = v_new;
 
 times(1) = toc;
-fprintf("Newton-Raphson does %d iterations\n", iter)
+%fprintf("Newton-Raphson does %d iterations\n", iter)
 
 %% 3. BFGS - built into Matlab
 
@@ -92,7 +92,7 @@ end
 v_steep = v_new;
 
 times(3) = toc;
-fprintf("Steepest Descent does %d iterations\n", iter)
+%fprintf("Steepest Descent does %d iterations\n", iter)
 
 %% 5. Conjugate descent
 
@@ -135,6 +135,6 @@ end
 v_conj = v_new;
 
 times(4) = toc;
-fprintf("Conjugate Descent does %d iterations\n", iter)
-fprintf("Times for methods are the following\n")
-print_matrix(times, 4)
+%fprintf("Conjugate Descent does %d iterations\n", iter)
+%fprintf("Times for methods are the following\n")
+%print_matrix(times, 4)
