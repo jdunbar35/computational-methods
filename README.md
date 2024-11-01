@@ -2,9 +2,8 @@
 
 This repository will contain my homework assignments for Computation Methods in fall 2024.
 
-### Homework 1 (`HW1/`)
+### `HW1/`: Homework 1
 1. `Computational_Methods_HW1.pdf`: My solutions
-1. `HW1_handout.pdf`: Handout for context
 1. `Q2_intergration.m`
     - `integrate_utility.m`
 1. `Q3_optimization.m`
