@@ -1,8 +1,8 @@
 ## Computational Methods
 
-This repository will contain my homework assignments for Computation Methods in fall 2024.
+This repository will contain my first homework for Computation Methods in fall 2024.
 
-### `HW1/`: Homework 1
+### Files
 1. `Computational_Methods_HW1.pdf`: My solutions
 1. `Q2_intergration.m`: Comparison of integration techniques
     - `integrate_utility.m`: Performs integration
