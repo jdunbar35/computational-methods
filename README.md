@@ -4,6 +4,7 @@ This repository will contain my first homework for Computation Methods in fall 2
 
 ### Files
 1. `Computational_Methods_HW1.pdf`: My solutions
+1. `HW1_handout.pdf`: The assignment
 1. `Q2_intergration.m`: Comparison of integration techniques
     - `integrate_utility.m`: Performs integration
 1. `Q3_optimization.m`: Compares the performance of optimization methods
