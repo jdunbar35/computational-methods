@@ -1,4 +1,4 @@
-## Computational Methods
+## Computational Methods HW1
 
 This repository will contain my first homework for Computation Methods in fall 2024.
 
